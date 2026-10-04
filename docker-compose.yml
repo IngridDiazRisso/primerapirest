@@ -1,0 +1,21 @@
+services:
+
+  db:
+    image: postgres:latest
+    restart: always
+
+    shm_size: 128mb
+    volumes:
+      - ./postgres:/var/lib/postgresql
+    environment:
+      POSTGRES_USER: ${SPRING_DATASOURCE_USERNAME}
+      POSTGRES_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+      POSTGRES_DB: ${SPRING_DATASOURCE_DB}
+    ports:
+      - "5433:5432" # El puerto correcto para conectarte a Postgres desde fuera de Docker
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8081:8080 # Cambiado a 8081 para no chocar con el 8080 de tu Spring Boot
